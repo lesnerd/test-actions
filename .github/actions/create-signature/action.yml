@@ -10,13 +10,15 @@ inputs:
   package-repo-name:
     description: "The repository name of the package."
     required: true
+  private-key:
+    description: "The private key to sign the DSSE."
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - run: ./entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }}
+    - run: ./entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }} ${{ secrets.PRIVATE_KEY }}
       shell: bash
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         RUN_NUMBER: ${{ github.run_number }}
-        PRIVATE_KEY: 1

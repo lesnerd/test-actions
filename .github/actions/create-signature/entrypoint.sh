@@ -1,12 +1,11 @@
 #!/bin/bash
 
-# entrypoint.sh
-
 set -e
 
 # Capture input parameters
 PACKAGE_NAME=$1
 PACKAGE_REPO_NAME=$2
+PRIVATE_KEY=$3
 
 # Set package version from GitHub run number
 PACKAGE_VERSION="${RUN_NUMBER}"
