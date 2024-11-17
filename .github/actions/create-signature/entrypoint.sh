@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# entrypoint.sh
+
 set -e
 
 # Capture input parameters
@@ -15,5 +17,5 @@ echo '{ "actor": "'"${GITHUB_ACTOR}"'", "date": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ
 
 # Run the jf evd command
 jf evd create --package-name "$PACKAGE_NAME" --package-version "$PACKAGE_VERSION" --package-repo-name "$PACKAGE_REPO_NAME" \
-  --key "${PRIVATE_KEY}" \
+  --key "$PRIVATE_KEY" \
   --predicate ./sign.json --predicate-type https://jfrog.com/evidence/signature/v1
