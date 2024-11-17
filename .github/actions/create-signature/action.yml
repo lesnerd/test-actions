@@ -14,10 +14,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ./entrypoint.sh
+    - run: ./entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }}
       shell: bash
-      with:
-        args: ${{ inputs.package-name }} ${{ inputs.package-repo-name }}
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         RUN_NUMBER: ${{ github.run_number }}
