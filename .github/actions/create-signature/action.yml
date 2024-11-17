@@ -2,7 +2,7 @@
 
 name: "Create Signature for Package"
 description: "Creates a signature JSON and calls the jf evd create command."
-
+author: 'lesnerd'
 inputs:
   package-name:
     description: "The name of the package."
@@ -19,4 +19,4 @@ runs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         RUN_NUMBER: ${{ github.run_number }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        PRIVATE_KEY: 1
