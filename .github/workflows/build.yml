@@ -38,6 +38,3 @@ jobs:
                 package-repo-name: "example-project-docker-dev"
                 private-key: ${{ secrets.PRIVATE_KEY }}
                   
-            - name: Build
-              run: |
-                  python setup.py sdist bdist_wheel
