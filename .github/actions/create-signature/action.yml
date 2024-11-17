@@ -18,8 +18,8 @@ runs:
   using: "composite"
   steps:
     - run: |
-        chmod +x ./entrypoint.sh
-        ./entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }} ${{ inputs.private-key }}
+        chmod +x ./.github/actions/create-signature/entrypoint.sh
+        ./.github/actions/create-signature/entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }} ${{ inputs.private-key }}
       shell: bash
       env:
         GITHUB_ACTOR: ${{ github.actor }}
