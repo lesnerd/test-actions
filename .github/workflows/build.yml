@@ -35,6 +35,6 @@ jobs:
               uses: ./.github/actions/create-signature
               with:
                 package-name: "example-project-app"
-                package-repo-name: "example-project-docker-dev"
+                package-repo-name: "example-project-docker-dev-local"
                 private-key: ${{ secrets.PRIVATE_KEY }}
                   
