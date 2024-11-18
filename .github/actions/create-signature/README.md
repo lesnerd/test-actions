@@ -2,8 +2,6 @@
 
 # .github/workflows/create-signature.yml
 
-# .github/workflows/create-signature.yml
-
 name: "Create Signature"
 
 on:
