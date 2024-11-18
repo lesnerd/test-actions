@@ -10,7 +10,7 @@ PACKAGE_REPO_NAME=$2
 PRIVATE_KEY=$3
 
 # Set package version from GitHub run number
-PACKAGE_VERSION="70"
+PACKAGE_VERSION="${RUN_NUMBER}"
 
 # Generate JSON signature file
 echo '{ "actor": "'"${GITHUB_ACTOR}"'", "date": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'" }' > sign.json
