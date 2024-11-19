@@ -12,15 +12,16 @@ inputs:
     required: true
   private-key:
     description: "The private key to sign the DSSE."
-    required: true
+    required: false
 
 runs:
   using: "composite"
   steps:
     - run: |
         chmod +x ./.github/actions/create-signature/entrypoint.sh
-        ./.github/actions/create-signature/entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }} ${{ inputs.private-key }}
+        ./.github/actions/create-signature/entrypoint.sh ${{ inputs.package-name }} ${{ inputs.package-repo-name }} ${{ inputs.private-key || env.PRIVATE_KEY }}
       shell: bash
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         RUN_NUMBER: ${{ github.run_number }}
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

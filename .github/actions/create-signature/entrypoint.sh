@@ -9,6 +9,10 @@ PACKAGE_NAME=$1
 PACKAGE_REPO_NAME=$2
 PRIVATE_KEY=$3
 
+if [ -z "$PRIVATE_KEY" ]; then
+  PRIVATE_KEY=$PRIVATE_KEY
+fi
+
 # Set package version from GitHub run number
 PACKAGE_VERSION="${RUN_NUMBER}"
 
