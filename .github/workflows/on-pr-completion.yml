@@ -1,11 +1,12 @@
-name: Generate Approval Details JSON
+name: Validate Pull Request Approvals
 
 on:
-  pull_request_target:
-    types: [ready_for_review, synchronize, reopened]
+  pull_request:
+    types: [closed]
 
 jobs:
-  generate-approval-details:
+  check-approvals:
+    if: github.event.pull_request.merged == true  # Run only if the PR is merged
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +24,7 @@ jobs:
             pull_number: context.payload.pull_request.number,
           });
 
+          // Filter for approved reviews
           const approvers = reviews
             .filter(review => review.state === "APPROVED")
             .map(review => ({
@@ -32,13 +34,19 @@ jobs:
               avatar_url: review.user.avatar_url,
             }));
 
+          if (approvers.length === 0) {
+            core.setFailed("This pull request has no approvals and cannot be merged.");
+          }
+
           core.setOutput("approvers", JSON.stringify(approvers, null, 2));
 
     - name: Save Approvers to JSON
+      if: success()
       run: |
         echo '${{ steps.get-approvals.outputs.approvers }}' > approvers.json
 
     - name: Upload JSON as Artifact
+      if: success()
       uses: actions/upload-artifact@v3
       with:
         name: approvers-json
