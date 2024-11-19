@@ -1,0 +1,45 @@
+name: Generate Approval Details JSON
+
+on:
+  pull_request_target:
+    types: [ready_for_review, synchronize, reopened]
+
+jobs:
+  generate-approval-details:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Get Pull Request Approvals
+      id: get-approvals
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data: reviews } = await github.rest.pulls.listReviews({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number,
+          });
+
+          const approvers = reviews
+            .filter(review => review.state === "APPROVED")
+            .map(review => ({
+              login: review.user.login,
+              id: review.user.id,
+              name: review.user.name || review.user.login,
+              avatar_url: review.user.avatar_url,
+            }));
+
+          core.setOutput("approvers", JSON.stringify(approvers, null, 2));
+
+    - name: Save Approvers to JSON
+      run: |
+        echo '${{ steps.get-approvals.outputs.approvers }}' > approvers.json
+
+    - name: Upload JSON as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: approvers-json
+        path: approvers.json
